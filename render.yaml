@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: medcheck-ai-backend
+    runtime: python
+    pythonVersion: 3.11
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: MEDCHECK_SECRET_KEY
+        sync: false
+      - key: MEDCHECK_DATABASE_URL
+        value: sqlite:////tmp/medcheck.db
+      - key: MEDCHECK_ALLOWED_ORIGINS
+        sync: false
+      - key: MEDCHECK_UPLOAD_DIR
+        value: /tmp/uploads
+      - key: MEDCHECK_DEV_ADMIN_BOOTSTRAP
+        value: "1"
